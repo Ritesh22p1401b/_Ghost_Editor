@@ -192,6 +192,21 @@ class PostUpdate(graphene.Mutation):
 
         return PostUpdate(post_update=updated_post)
 
+# //////................Delete Post...........////////////
+
+class PostDelete(graphene.Mutation):
+
+    post_delete=graphene.Field(PostType)
+
+
+    class Arguments:
+        post_id=graphene.Int(required=True)
+
+    def mutate(self,info,post_id):
+        deleteed_post=Post.objects.get(id=post_id)
+        deleteed_post.delete()
+
+        return PostDelete(post_delete=deleteed_post)
 
 
 class Mutation(graphene.ObjectType):
@@ -199,6 +214,7 @@ class Mutation(graphene.ObjectType):
     create_author = CreateAuthor.Field()
     create_post=CreatePost.Field()
     post_update=PostUpdate.Field()
+    post_delete=PostDelete.Field()
 
 
 schema = graphene.Schema(query=Query,mutation=Mutation)
