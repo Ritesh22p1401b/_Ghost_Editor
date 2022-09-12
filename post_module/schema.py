@@ -85,7 +85,7 @@ class CreateTag(graphene.Mutation):
 
     def mutate(root,info, name):
         name=Tag.objects.create(name=name)
-        name.save()
+
         return CreateTag(create_tag=name) 
 
 
@@ -101,7 +101,7 @@ class CreateAuthor(graphene.Mutation):
         bio=graphene.String()
 
 
-    def mutate(self,info,id,first_name ,last_name,bio, **kwargs):
+    def mutate(self,info,id,first_name ,last_name,bio,**kwargs):
         
         user = ExtendUser.objects.get(pk=id)
 
@@ -111,8 +111,7 @@ class CreateAuthor(graphene.Mutation):
             created_at=timezone.now(),
             bio=bio
         )
-        author_create.save()
-
+      
         return CreateAuthor(create_author=author_create)
 
 
@@ -138,7 +137,7 @@ class CreatePost(graphene.Mutation):
         date_modified=graphene.DateTime()
 
 
-    def mutate(self,info,author_id,tags_id,title,subtitle,slug,body,description,published, **kwargs):
+    def mutate(self,info,author_id,tags_id,title,subtitle,slug,body,description,published,**kwargs):
         
         author = Author.objects.get(pk=author_id)
 
@@ -154,7 +153,7 @@ class CreatePost(graphene.Mutation):
             published=published,
             date_modified=timezone.now()
         )
-        
+
         #for checking purpose[
         # p=post_create.id
         # post=Post.objects.get(id=p) ]
@@ -182,7 +181,7 @@ class PostUpdate(graphene.Mutation):
         description=graphene.String()
         published=graphene.Boolean()
        
-    def mutate(self,info,author_id,post_pk,title,subtitle,slug,body,description,published, **kwargs):
+    def mutate(self,info,author_id,post_pk,title,subtitle,slug,body,description,published,**kwargs):
 
         author = Author.objects.get(pk=author_id)
 
@@ -199,7 +198,9 @@ class PostUpdate(graphene.Mutation):
 
         return PostUpdate(post_update=updated_post)
 
+
 # //////................Delete Post...........////////////
+
 
 class PostDelete(graphene.Mutation):
 
@@ -219,9 +220,9 @@ class PostDelete(graphene.Mutation):
 class Mutation(graphene.ObjectType):
     create_tag = CreateTag.Field()
     create_author = CreateAuthor.Field()
-    create_post=CreatePost.Field()
-    post_update=PostUpdate.Field()
-    post_delete=PostDelete.Field()
+    create_post = CreatePost.Field()
+    post_update = PostUpdate.Field()
+    post_delete = PostDelete.Field()
 
 
 schema = graphene.Schema(query=Query,mutation=Mutation)
