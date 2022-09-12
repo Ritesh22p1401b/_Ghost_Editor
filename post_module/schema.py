@@ -127,7 +127,7 @@ class CreatePost(graphene.Mutation):
     
     class Arguments:
         author_id=graphene.Int()
-        # tags_id=graphene.Int()
+        tags_id=graphene.Int()
         title=graphene.String()
         subtitle=graphene.String()
         slug=graphene.String()
@@ -138,10 +138,11 @@ class CreatePost(graphene.Mutation):
         date_modified=graphene.DateTime()
 
 
-    def mutate(self,info,author_id,title,subtitle,slug,body,description,published, **kwargs):
+    def mutate(self,info,author_id,tags_id,title,subtitle,slug,body,description,published, **kwargs):
         
         author = Author.objects.get(pk=author_id)
-        # tags=Tag.objects.get(pk=tags_id)
+
+        t1=Tag.objects.get(id=tags_id)
 
         post_create = Post.objects.create(author=author,
             title=title,
@@ -153,8 +154,14 @@ class CreatePost(graphene.Mutation):
             published=published,
             date_modified=timezone.now()
         )
+        
+        #for checking purpose[
+        # p=post_create.id
+        # post=Post.objects.get(id=p) ]
+    
+        post_create.tags.add(t1)
+        
 
-        post_create.save()
         return CreatePost(create_post=post_create)
 
 
