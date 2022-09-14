@@ -110,6 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -134,6 +135,10 @@ AUTH_USER_MODEL = 'users.ExtendUser'
 GRAPHENE = {
     'SCHEMA': 'users.schema.schema',
     'SCHEMA': 'post_module.schema.schema',
+    'SCHEMA': 'post_module.mutation.tags.schema',
+    'SCHEMA': 'post_module.mutation.author.schema',
+    'SCHEMA': 'post_module.mutation.post.schema',
+
     'MIDDLEWARE': [
         'graphql_jwt.middleware.JSONWebTokenMiddleware',
     ], 

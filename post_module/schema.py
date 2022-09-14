@@ -1,5 +1,4 @@
 import graphene
-from django.utils import timezone
 from .types import *
 
 
@@ -75,92 +74,7 @@ class Query(graphene.ObjectType):
 #////........ Mutation start Here........  /////
 
 
-
-class CreateTag(graphene.Mutation):
-
-    create_tag = graphene.Field(TagType)
-
-    class Arguments:
-        name = graphene.String(required=True)
-
-    def mutate(root,info, name):
-        name=Tag.objects.create(name=name)
-
-        return CreateTag(create_tag=name) 
-
-
-class CreateAuthor(graphene.Mutation):
-    
-    create_author = graphene.Field(AuthorType)
-    
-    class Arguments:
-        id=graphene.Int()
-        first_name = graphene.String()
-        last_name = graphene.String()
-        created_at = graphene.DateTime()
-        bio=graphene.String()
-
-
-    def mutate(self,info,id,first_name ,last_name,bio,**kwargs):
-        
-        user = ExtendUser.objects.get(pk=id)
-
-        author_create = Author.objects.create(username=user,
-            first_name=first_name,
-            last_name=last_name,
-            created_at=timezone.now(),
-            bio=bio
-        )
-      
-        return CreateAuthor(create_author=author_create)
-
-
-
-#///....................Post Create..................//////////////
-
-
-
-class CreatePost(graphene.Mutation):
-    
-    create_post = graphene.Field(PostType)
-    
-    class Arguments:
-        author_id=graphene.Int()
-        tags_id=graphene.Int()
-        title=graphene.String()
-        subtitle=graphene.String()
-        slug=graphene.String()
-        body=graphene.String()
-        description=graphene.String()
-        published_date = graphene.DateTime()
-        published=graphene.Boolean()
-        date_modified=graphene.DateTime()
-
-
-    def mutate(self,info,author_id,tags_id,title,subtitle,slug,body,description,published,**kwargs):
-        
-        author = Author.objects.get(pk=author_id)
-
-        t1=Tag.objects.get(id=tags_id)
-
-        post_create = Post.objects.create(author=author,
-            title=title,
-            subtitle=subtitle,
-            slug=slug,
-            body=body,
-            description=description,
-            published_date=timezone.now(),
-            published=published,
-            date_modified=timezone.now()
-        )
-
-        post_create.tags.add(t1)
-        
-
-        return CreatePost(create_post=post_create)
-
-
-# ////.............. Update Post........ /////
+# # ////.............. Update Post........ /////
 
 
 class PostUpdate(graphene.Mutation):
@@ -214,9 +128,6 @@ class PostDelete(graphene.Mutation):
 
 
 class Mutation(graphene.ObjectType):
-    create_tag = CreateTag.Field()
-    create_author = CreateAuthor.Field()
-    create_post = CreatePost.Field()
     post_update = PostUpdate.Field()
     post_delete = PostDelete.Field()
 
