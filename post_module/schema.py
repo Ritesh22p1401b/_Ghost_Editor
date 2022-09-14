@@ -154,10 +154,6 @@ class CreatePost(graphene.Mutation):
             date_modified=timezone.now()
         )
 
-        #for checking purpose[
-        # p=post_create.id
-        # post=Post.objects.get(id=p) ]
-    
         post_create.tags.add(t1)
         
 
