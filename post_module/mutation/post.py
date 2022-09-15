@@ -45,8 +45,59 @@ class CreatePost(graphene.Mutation):
 
         return CreatePost(create_post=post_create)
 
+
+class PostUpdate(graphene.Mutation):
+    
+    post_update = graphene.Field(PostType)
+    
+    class Arguments:
+        author_id=graphene.Int()
+        post_pk=graphene.Int()
+        title=graphene.String()
+        subtitle=graphene.String()
+        slug=graphene.String()
+        body=graphene.String()
+        description=graphene.String()
+        published=graphene.Boolean()
+       
+    def mutate(self,info,author_id,post_pk,title,subtitle,slug,body,description,published,**kwargs):
+
+        author = Author.objects.get(pk=author_id)
+
+        updated_post=Post.objects.get(id=post_pk)
+
+        updated_post.author=author
+        updated_post.title=title
+        updated_post.subtitle=subtitle
+        updated_post.slug=slug
+        updated_post.body=body
+        updated_post.description=description
+        updated_post.published=published
+        updated_post.save()
+
+        return PostUpdate(post_update=updated_post)
+
+
+class PostDelete(graphene.Mutation):
+
+    post_delete=graphene.Field(PostType)
+
+
+    class Arguments:
+        post_id=graphene.Int(required=True)
+
+    def mutate(self,info,post_id):
+        deleteed_post=Post.objects.get(id=post_id)
+        deleteed_post.delete()
+
+        return PostDelete(post_delete=deleteed_post)
+
+
+
+   
 class Mutation(graphene.ObjectType):
     create_post = CreatePost.Field()
-
+    post_update = PostUpdate.Field()
+    post_delete = PostDelete.Field()
 
 schema = graphene.Schema(mutation=Mutation)
