@@ -138,6 +138,7 @@ GRAPHENE = {
     'SCHEMA': 'post_module.mutation.tags.schema',
     'SCHEMA': 'post_module.mutation.author.schema',
     'SCHEMA': 'post_module.mutation.post.schema',
+    'SCHEMA': 'post_module.pagination.schema.schema',
 
     'MIDDLEWARE': [
         'graphql_jwt.middleware.JSONWebTokenMiddleware',

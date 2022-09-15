@@ -16,7 +16,7 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
 
     class Meta:
-        ordering = ["-published_date"]
+        ordering = ["slug"]
 
     def __str__(self):
         return self.title
