@@ -107,7 +107,5 @@ class Query(graphene.ObjectType):
             .filter(tags__name__iexact=tag)
         )
 
-class Query(Query, graphene.ObjectType):
-    pass
 
 schema = graphene.Schema(query=Query)
