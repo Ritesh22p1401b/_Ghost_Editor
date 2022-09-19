@@ -119,7 +119,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
@@ -135,14 +134,14 @@ AUTH_USER_MODEL = 'users.ExtendUser'
 GRAPHENE = {
     'SCHEMA': 'users.schema.schema',
     'SCHEMA': 'post_module.schema.schema',
-    'SCHEMA': 'post_module.mutations.tags.schema',
-    'SCHEMA': 'post_module.mutations.author.schema',
-    'SCHEMA': 'post_module.mutations.post.schema',
-    'SCHEMA': 'post_module.mutations.comment.schema',
+    # 'SCHEMA': 'post_module.mutations.tags.schema',
+    # 'SCHEMA': 'post_module.mutations.author.schema',
+    # 'SCHEMA': 'post_module.mutations.post.schema',
+    # 'SCHEMA': 'post_module.mutations.comment.schema',
 
     'MIDDLEWARE': [
         'graphql_jwt.middleware.JSONWebTokenMiddleware',
-    ], 
+    ],
 }
 
 AUTHENTICATION_BACKENDS = [

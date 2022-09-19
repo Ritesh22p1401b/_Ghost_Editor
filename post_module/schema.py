@@ -1,9 +1,5 @@
 import graphene
 from .types import *
-# from post_module.pagination.fields import PageConnection, PageConnectionField
-# from post_module.pagination.schema import *
-
-
 from django_filters import FilterSet, OrderingFilter
 from graphene import relay
 from graphene_django import DjangoObjectType
