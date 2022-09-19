@@ -1,3 +1,4 @@
+from pyexpat import model
 from graphene_django.types import DjangoObjectType
 from users.models import ExtendUser
 from .models import *
@@ -22,3 +23,9 @@ class TagType(DjangoObjectType):
     class Meta:
         model = Tag
         fields=("name",)
+
+
+class CommentType(DjangoObjectType):
+    class Meta:
+        model=Comment
+        fields='__all__'
